@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismaelmehdid <ismaelmehdid@student.42.f    +#+  +:+       +#+        */
+/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:07:22 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/02/09 20:12:45 by ismaelmehdi      ###   ########.fr       */
+/*   Updated: 2024/02/13 20:02:03 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 	data = check_set_data(argc, argv);
 	if (!data)
 		return (1);
+	return (0);
 	/*
 	if (argc == 5)
 	{

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   errors_handling.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismaelmehdid <ismaelmehdid@student.42.f    +#+  +:+       +#+        */
+/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:08:39 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/02/09 20:12:46 by ismaelmehdi      ###   ########.fr       */
+/*   Updated: 2024/02/13 20:01:58 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
 
-unsigned int	ft_atoi_uint(const char *str)
+static unsigned int	ft_atoi_uint(const char *str)
 {
 	int				i;
 	unsigned int	temp;
@@ -28,7 +28,7 @@ unsigned int	ft_atoi_uint(const char *str)
 	return (temp);
 }
 
-int	is_only_digits(char *array)
+static int	is_only_digits(char *array)
 {
 	int	i;
 
@@ -44,7 +44,7 @@ int	is_only_digits(char *array)
 	return (1);
 }
 
-int	check_data(int argc, char **argv)
+static int	check_data(int argc, char **argv)
 {
 	int	i;
 
@@ -58,7 +58,7 @@ int	check_data(int argc, char **argv)
 	return (1);
 }
 
-unsigned int	*set_data(int argc, char **argv)
+static unsigned int	*set_data(int argc, char **argv)
 {
 	int				j;
 	int				i;
@@ -75,7 +75,6 @@ unsigned int	*set_data(int argc, char **argv)
 		i++;
 		j++;
 	}
-	data[j] = NULL;
 	return (data);
 }
 

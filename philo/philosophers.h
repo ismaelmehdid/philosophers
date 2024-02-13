@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismaelmehdid <ismaelmehdid@student.42.f    +#+  +:+       +#+        */
+/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:07:32 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/02/08 02:26:16 by ismaelmehdi      ###   ########.fr       */
+/*   Updated: 2024/02/13 20:02:05 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@
 # include <pthread.h>
 # include <stdio.h>
 
-
+unsigned int	*check_set_data(int argc, char **argv);
 
 #endif
