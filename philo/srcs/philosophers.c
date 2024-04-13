@@ -3,36 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismaelmehdid <ismaelmehdid@student.42.f    +#+  +:+       +#+        */
+/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:07:22 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/02/09 20:12:45 by ismaelmehdi      ###   ########.fr       */
+/*   Updated: 2024/04/05 18:15:46 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../includes/philosophers.h"
 
 int	main(int argc, char **argv)
 {
-	unsigned int	*data;
+	t_table			table;
 
-	data = NULL;
-	if (argc < 5 || argc > 6)
-	{
-		write (2, "Error, Wrong arguments\n", 24);
+	if (init_data(argc, argv, &table) != 0)
 		return (1);
-	}
-	data = check_set_data(argc, argv);
-	if (!data)
+	if (start_dinner(&table) != 0)
 		return (1);
-	/*
-	if (argc == 5)
-	{
-		
-	}
-	else if (argc == 6)
-	{
-		
-	}
-	*/
+	destroy_and_free_everything(&table);
+	return (0);
 }

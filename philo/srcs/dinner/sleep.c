@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   sleep.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ismaelmehdid <ismaelmehdid@student.42.f    +#+  +:+       +#+        */
+/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 15:07:32 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/02/08 02:26:16 by ismaelmehdi      ###   ########.fr       */
+/*   Created: 2024/04/05 19:14:55 by imehdid           #+#    #+#             */
+/*   Updated: 2024/04/12 20:56:50 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#include "../../includes/philosophers.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <pthread.h>
-# include <stdio.h>
-
-
-
-#endif
+void	sleeping(t_table *table, t_philo *philo)
+{
+	wait_and_check(table, philo, SLEEP);
+}
