@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 18:58:51 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/13 18:33:30 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/15 20:55:04 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,6 @@ int	ft_atoi(const char *str)
 	if (countm == 1)
 		return (-temp);
 	return (temp);
-}
-
-long	get_elapsed_time(t_table *table)
-{
-	struct timeval	actual_time;
-
-	if (gettimeofday(&actual_time, NULL) != 0)
-		return (-1);
-	return ((actual_time.tv_sec - table->started_time.tv_sec) * 1000
-		+ (actual_time.tv_usec - table->started_time.tv_usec) / 1000);
 }
 
 bool	is_only_digits(char *array)

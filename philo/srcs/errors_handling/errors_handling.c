@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:08:39 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/04/05 20:02:18 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/15 20:44:23 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@ static int	check_data(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
+		if (ft_atol(argv[i]) <= 0)
+		{
+			write (STDERR_FILENO,
+				"One or several arguments are lower or equal to zero\n", 53);
+			return (1);
+		}
 		if (is_only_digits(argv[i]) == false)
 		{
-			write (STDERR_FILENO, "The arguments are not only digits, ", 36);
-			write (STDERR_FILENO, "or some of them are negative\n", 30);
+			write (STDERR_FILENO, "The arguments are not only digits\n", 35);
 			return (1);
 		}
 		i++;

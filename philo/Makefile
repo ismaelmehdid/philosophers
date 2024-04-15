@@ -6,13 +6,13 @@
 #    By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 15:07:05 by ismaelmehdi       #+#    #+#              #
-#    Updated: 2024/04/13 18:33:51 by imehdid          ###   ########.fr        #
+#    Updated: 2024/04/15 21:05:40 by imehdid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = ${wildcard srcs/*.c srcs/errors_handling/*.c srcs/init_data/*.c srcs/utils/*.c srcs/dinner/*.c}
+SRCS = ${wildcard srcs/*.c srcs/errors_handling/*.c srcs/init_data/*.c srcs/utils/*.c srcs/dinner/*.c srcs/utils/getters_and_setters/*.c}
 
 OBJDIR = ./objs
 OBJS = ${SRCS:%.c=$(OBJDIR)/%.o}

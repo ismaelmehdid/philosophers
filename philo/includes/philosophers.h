@@ -6,12 +6,14 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:07:32 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/04/13 18:34:02 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/15 21:05:06 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
+
+//=== Includes ------------------------------------------------------------===//
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -29,19 +31,20 @@ typedef enum s_types{
 	THINK,
 	FORK,
 	DIE,
-} t_types;
+}	t_types;
 
 typedef struct s_table {
-	int					number_of_philosophers;
+	int					nbr_of_philos;
 	long				time_to_die;
 	long				time_to_eat;
 	long				time_to_sleep;
-	int					max_meals; // OPTIONAL : -1 if not set
+	int					max_meals;
 	pthread_mutex_t		*forks;
 	struct s_philospher	*philosophers;
 	pthread_t			*monitor;
+	bool				monitor_ready;
 	struct timeval		started_time;
-	int					number_of_philosophers_ready;
+	int					nbr_of_philos_ready;
 	pthread_mutex_t		data_mutex;
 	bool				dinning;
 }t_table;
@@ -50,7 +53,7 @@ typedef struct s_philospher {
 	int				id;
 	pthread_t		*thread_id;
 	long			last_meal;
-	int				meals_remaining; // OPTIONAL : -1 if not set
+	int				meals_remaining;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	t_table			*table;
@@ -65,24 +68,23 @@ int		errors_handling(int argc, char **argv);
 void	*dinner(void *arg);
 void	*monitor(void *arg);
 int		start_dinner(t_table *table);
+void	synchronize_every_threads(t_table *table);
 void	eating(t_table *table, t_philo *philo);
 void	sleeping(t_table *table, t_philo *philo);
 void	thinking(t_table *table, t_philo *philo);
-void	wait_and_check(t_table *table, t_philo *philo, t_types type);
-int		wait_all_philosophers_to_start(t_table *table);
 int		philosophers_threads_init(t_table *table);
 int		philosophers_threads_joiner(t_table *table);
-void	*check_all_philos_status(t_table *table);
 
 //=== Setters and getters -------------------------------------------------===//
 
-int		get_int(t_table *table, int value);
+int		get_int(t_table *table, int *value);
 void	set_int(t_table *table, int *value, int new_value);
+void	increment_int(t_table *table, int *value);
 
-bool	get_bool(t_table *table, bool value);
+bool	get_bool(t_table *table, bool *value);
 void	set_bool(t_table *table, bool *value, bool new_value);
 
-long	get_long(t_table *table, long value);
+long	get_long(t_table *table, long *value);
 void	set_long(t_table *table, long *value, long new_value);
 
 //=== Utilities -----------------------------------------------------------===//

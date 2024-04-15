@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/13 15:43:08 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/13 16:03:47 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/15 20:58:30 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ int	philosophers_threads_init(t_table *table)
 		destroy_and_free_everything(table);
 		return (1);
 	}
-	while (i < table->number_of_philosophers)
+	while (i < table->nbr_of_philos)
 	{
-		if (pthread_create(table->philosophers[i].thread_id, NULL, &dinner, &table->philosophers[i]) != 0)
+		if (pthread_create(table->philosophers[i].thread_id, NULL, &dinner,
+				&table->philosophers[i]) != 0)
 		{
 			write (STDERR_FILENO, "Error while creating threads\n", 30);
 			destroy_and_free_everything(table);
@@ -47,7 +48,7 @@ int	philosophers_threads_joiner(t_table *table)
 		destroy_and_free_everything(table);
 		return (1);
 	}
-	while (i < table->number_of_philosophers)
+	while (i < table->nbr_of_philos)
 	{
 		if (pthread_join(*table->philosophers[i].thread_id, NULL) != 0)
 		{

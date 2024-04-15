@@ -6,27 +6,11 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 00:35:04 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/13 17:39:48 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/15 21:01:05 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
-
-void	*monitor(void *arg)
-{
-	t_table	*table;
-
-	table = (t_table *)arg;
-	printf("I am the monitor\n");
-	while (get_int(
-		table,
-		table->number_of_philosophers_ready) != table->number_of_philosophers)
-	{
-		usleep(1000);//TODO: loop leading to deadlock
-	}
-	check_all_philos_status(table);
-	return (NULL);
-}
 
 void	*dinner(void *arg)
 {
@@ -35,16 +19,17 @@ void	*dinner(void *arg)
 
 	philosopher = (t_philo *)arg;
 	table = philosopher->table;
-	wait_all_philosophers_to_start(table);
+	synchronize_every_threads(table);
+	//printf("%ld thread nb:%d started\n", get_elapsed_time(table), philosopher->id);
 	while (table->dinning)
 	{
-		thinking(table, philosopher);
-		if (table->dinning)
-			eating(table, philosopher);
+		eating(table, philosopher);
 		if (table->max_meals != -1 && philosopher->meals_remaining == 0)
 			return (NULL);
 		if (table->dinning)
 			sleeping(table, philosopher);
+		if (table->dinning)
+			thinking(table, philosopher);
 	}
 	return (NULL);
 }

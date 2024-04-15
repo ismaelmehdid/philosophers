@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:51:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/13 17:28:04 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/15 21:00:24 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ static int	set_philosopher(t_table *table, int i)
 
 	j = 0;
 	table->philosophers[i].id = i;
-	table->philosophers[i].last_meal= -1;
-	table->philosophers[i].left_fork = &table->forks[i % table->number_of_philosophers];
-	table->philosophers[i].right_fork = &table->forks[(i + 1) % table->number_of_philosophers];
+	table->philosophers[i].last_meal = -1;
+	table->philosophers[i].left_fork = &table->forks[i % table->nbr_of_philos];
+	table->philosophers[i].right_fork
+		= &table->forks[(i + 1) % table->nbr_of_philos];
 	table->philosophers[i].table = table;
 	table->philosophers[i].eating = false;
 	if (table->max_meals != -1)
@@ -44,17 +45,17 @@ int	set_philosophers(t_table *table)
 	int	i;
 
 	i = 0;
-	table->philosophers = malloc(sizeof(t_philo) * table->number_of_philosophers);
+	table->philosophers = malloc(sizeof(t_philo) * table->nbr_of_philos);
 	if (!table->philosophers)
 	{
 		write (STDERR_FILENO, "Memory allocation failure\n", 27);
 		destroy_all_mutexes(table);
 		return (1);
 	}
-	while (i < table->number_of_philosophers)
+	while (i < table->nbr_of_philos)
 	{
 		if (set_philosopher(table, i) != 0)
-			return (1);	
+			return (1);
 		i++;
 	}
 	return (0);
@@ -67,13 +68,13 @@ int	set_forks(t_table *table)
 
 	i = 0;
 	j = 0;
-	table->forks = malloc(sizeof(pthread_mutex_t) * table->number_of_philosophers);
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->nbr_of_philos);
 	if (!table->forks)
 	{
 		write (STDERR_FILENO, "Memory allocation failure\n", 27);
 		return (1);
 	}
-	while (i < table->number_of_philosophers)
+	while (i < table->nbr_of_philos)
 	{
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
 		{
