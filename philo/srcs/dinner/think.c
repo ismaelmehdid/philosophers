@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 02:33:16 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/15 20:59:33 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:02:59 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	thinking(t_table *table, t_philo *philo)
 {
-	int	right_philo;
-	int	left_philo;
+	long	thinking_time;
 
-	print_message(philo, THINK);
-	right_philo
-		= ((philo->id - 1 + table->nbr_of_philos) % table->nbr_of_philos);
-	left_philo = ((philo->id + 1) % table->nbr_of_philos);
-	while (table->dinning && (table->philosophers[left_philo].eating
-			|| table->philosophers[right_philo].eating))
+	if (table->dinning)
+		print_message(philo, THINK);
+	if (table->nbr_of_philos % 2 != 0)
 	{
+		thinking_time = (table->time_to_eat * 2) - table->time_to_sleep;
+		if (thinking_time < 0)
+			thinking_time = 0;
+		usleep(thinking_time * 0.5);
 	}
 }

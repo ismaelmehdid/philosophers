@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:40:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/15 20:58:21 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:16:30 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,23 @@ void	synchronize_every_threads(t_table *table)
 void	print_message(t_philo *philo, t_types code)
 {
 	pthread_mutex_lock(&philo->table->data_mutex);
-	if (code == EAT)
+	if (code == EAT && philo->table->dinning)
 		printf(
 			"%ld %d is \033[32meating\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);
-	else if (code == SLEEP)
+	else if (code == SLEEP && philo->table->dinning)
 		printf(
 			"%ld %d is \033[34msleeping\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);
-	else if (code == THINK)
+	else if (code == THINK && philo->table->dinning)
 		printf(
 			"%ld %d is \033[33mthinking\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);
-	else if (code == FORK)
+	else if (code == FORK && philo->table->dinning)
 		printf(
 			"%ld %d has \033[32mtaken a fork\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);
-	else if (code == DIE)
+	else if (code == DIE && philo->table->dinning)
 		printf(
 			"%ld %d \033[91mdied\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);

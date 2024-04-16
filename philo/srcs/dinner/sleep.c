@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 19:14:55 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/15 20:23:14 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:02:36 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	sleeping(t_table *table, t_philo *philo)
 	if (elapsed_time == -1)
 		return ;
 	time_to_finish = elapsed_time + table->time_to_sleep;
-	print_message(philo, SLEEP);
+	if (table->dinning)
+		print_message(philo, SLEEP);
 	while (table->dinning == true && elapsed_time < time_to_finish)
 	{
 		elapsed_time = get_elapsed_time(table);

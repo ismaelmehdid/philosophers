@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 00:35:04 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/15 21:01:05 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:05:14 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ void	*dinner(void *arg)
 		eating(table, philosopher);
 		if (table->max_meals != -1 && philosopher->meals_remaining == 0)
 			return (NULL);
-		if (table->dinning)
-			sleeping(table, philosopher);
-		if (table->dinning)
-			thinking(table, philosopher);
+		sleeping(table, philosopher);
+		thinking(table, philosopher);
 	}
 	return (NULL);
 }
