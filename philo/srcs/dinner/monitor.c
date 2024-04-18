@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:19:15 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/15 20:55:37 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:45:57 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ static void	*check_all_philos_status(t_table *table)
 		elapsed_time = get_elapsed_time(table);
 		if (elapsed_time == -1)
 			return (NULL);
-		if ((elapsed_time - table->philosophers[i].last_meal)
-			>= table->time_to_die)
+		if (table->philosophers[i].meals_remaining != 0
+			&& ((elapsed_time - table->philosophers[i].last_meal)
+				>= table->time_to_die))
 		{
 			print_message(&table->philosophers[i], DIE);
 			table->dinning = false;

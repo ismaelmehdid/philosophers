@@ -6,29 +6,11 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 19:14:47 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/16 20:06:18 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:46:20 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/philosophers.h"
-
-static void	eat_loop(t_table *table, t_philo *philo)
-{
-	long	time_to_finish;
-	long	elapsed_time;
-
-	elapsed_time = get_elapsed_time(table);
-	if (elapsed_time == -1)
-		return ;
-	time_to_finish = elapsed_time + table->time_to_eat;
-	print_message(philo, EAT);
-	while (table->dinning == true && elapsed_time < time_to_finish)
-	{
-		elapsed_time = get_elapsed_time(table);
-		if (elapsed_time == -1)
-			return ;
-	}
-}
 
 static void	take_or_release_forks(t_philo *philo, int code)
 {
@@ -62,6 +44,11 @@ void	eating(t_table *table, t_philo *philo)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		print_message(philo, FORK);
+		while (table->dinning)
+		{
+		}
+		if (table->dinning == false)
+			return ;
 	}
 	else
 		take_or_release_forks(philo, 0);
@@ -69,7 +56,8 @@ void	eating(t_table *table, t_philo *philo)
 	philo->last_meal = get_elapsed_time(table);
 	if (philo->last_meal == -1)
 		return ;
-	eat_loop(table, philo);
+	print_message(philo, EAT);
+	precise_usleep(table, table->time_to_eat * 1000);
 	if (table->nbr_of_philos == 1)
 		pthread_mutex_unlock(philo->left_fork);
 	else

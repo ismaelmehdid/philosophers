@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:07:32 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/04/16 14:30:07 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/18 16:18:00 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	sleeping(t_table *table, t_philo *philo);
 void	thinking(t_table *table, t_philo *philo);
 int		philosophers_threads_init(t_table *table);
 int		philosophers_threads_joiner(t_table *table);
+
+void	precise_usleep(t_table *table, long microsec);
 
 //=== Setters and getters -------------------------------------------------===//
 

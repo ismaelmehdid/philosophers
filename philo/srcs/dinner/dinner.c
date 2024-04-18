@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 00:35:04 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/16 20:05:14 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/18 18:34:49 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	*dinner(void *arg)
 	philosopher = (t_philo *)arg;
 	table = philosopher->table;
 	synchronize_every_threads(table);
-	//printf("%ld thread nb:%d started\n", get_elapsed_time(table), philosopher->id);
 	while (table->dinning)
 	{
 		eating(table, philosopher);
