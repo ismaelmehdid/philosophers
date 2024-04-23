@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data.c                                        :+:      :+:    :+:   */
+/*   init_data_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 18:45:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/19 17:28:15 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:32:25 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "../../includes_bonus/philosophers_bonus.h"
 
-static void	set_table_data_utils(int argc, char **argv, t_table *table)
+static int	set_table_data_utils(int argc, char **argv, t_table *table)
 {
 	table->nbr_of_philos = ft_atoi(argv[1]);
 	table->time_to_die = ft_atol(argv[2]);
@@ -25,21 +25,32 @@ static void	set_table_data_utils(int argc, char **argv, t_table *table)
 		table->max_meals = ft_atoi(argv[5]);
 	else
 		table->max_meals = -1;
+	table->forks = sem_open("/forks", O_CREAT, 0644, table->nbr_of_philos);
+	if (table->forks == SEM_FAILED)
+	{
+		write (STDERR_FILENO, "Semaphore opening error\n", 25);
+		if (sem_close(table->data_semaphore) == -1)
+			write (STDERR_FILENO, "Error while closing a semaphore\n", 33);
+		if (sem_unlink("/data_semaphore"))
+			write (STDERR_FILENO, "Error while unlinking a semaphore\n", 35);
+		return (1);
+	}
+	return (0);
 }
 
 static int	set_table_data(int argc, char **argv, t_table *table)
 {
-	if (pthread_mutex_init(&table->data_mutex, NULL) != 0)
+	table->data_semaphore = sem_open("/data_semaphore", O_CREAT, 0644, 1);
+	if (table->data_semaphore == SEM_FAILED)
 	{
-		write (STDERR_FILENO, "Mutex initialisation error\n", 28);
+		write (STDERR_FILENO, "Semaphore opening error\n", 25);
 		return (1);
 	}
-	set_table_data_utils(argc, argv, table);
-	if (set_forks(table) != 0)
-		return (1);
-	if (set_philosophers(table) != 0)
+	if (set_table_data_utils(argc, argv, table) != 0)
 		return (1);
 	if (set_monitor(table) != 0)
+		return (1);
+	if (set_philosophers(table) != 0)
 		return (1);
 	return (0);
 }

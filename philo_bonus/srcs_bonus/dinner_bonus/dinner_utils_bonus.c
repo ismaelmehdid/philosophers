@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dinner_utils.c                                     :+:      :+:    :+:   */
+/*   dinner_utils_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:40:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/18 19:04:25 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:50:02 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/philosophers.h"
+#include "../../includes_bonus/philosophers_bonus.h"
 
 void	precise_usleep(t_table *table, long microsec)
 {
@@ -55,34 +55,25 @@ long	get_elapsed_time(t_table *table)
 		+ (actual_time.tv_usec - table->started_time.tv_usec) / 1000);
 }
 
-void	synchronize_every_threads(t_table *table)
-{
-	increment_int(table, &table->nbr_of_philos_ready);
-	while ((table->nbr_of_philos_ready != table->nbr_of_philos
-			|| table->monitor_ready == false) && table->dinning == true)
-	{
-	}
-}
-
 void	print_message(t_philo *philo, t_types code)
 {
-	if (code == EAT && philo->table->dinning)
+	if (code == EAT)
 		printf(
 			"%ld %d is \033[32meating\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);
-	else if (code == SLEEP && philo->table->dinning)
+	else if (code == SLEEP)
 		printf(
 			"%ld %d is \033[34msleeping\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);
-	else if (code == THINK && philo->table->dinning)
+	else if (code == THINK)
 		printf(
 			"%ld %d is \033[33mthinking\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);
-	else if (code == FORK && philo->table->dinning)
+	else if (code == FORK)
 		printf(
 			"%ld %d has \033[32mtaken a fork\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);
-	else if (code == DIE && philo->table->dinning)
+	else if (code == DIE)
 		printf(
 			"%ld %d \033[91mdied\033[0m\n",
 			get_elapsed_time(philo->table), philo->id);
