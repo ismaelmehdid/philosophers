@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 19:14:55 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/18 18:22:00 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/24 23:46:03 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sleeping(t_table *table, t_philo *philo)
 {
-	if (table->dinning)
+	if (get_bool(table, &table->dinning))
 		print_message(philo, SLEEP);
 	else
 		return ;

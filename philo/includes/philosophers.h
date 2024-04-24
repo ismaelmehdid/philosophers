@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:07:32 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/04/18 16:18:00 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/24 23:57:41 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	precise_usleep(t_table *table, long microsec);
 int		get_int(t_table *table, int *value);
 void	set_int(t_table *table, int *value, int new_value);
 void	increment_int(t_table *table, int *value);
+void	decrement_int(t_table *table, int *value);
 
 bool	get_bool(t_table *table, bool *value);
 void	set_bool(t_table *table, bool *value, bool new_value);

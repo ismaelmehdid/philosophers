@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:19:15 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/18 19:16:28 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/24 23:45:48 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int	check_meals_remaining(t_table *table)
 	i = 0;
 	while (i < table->nbr_of_philos)
 	{
-		if (table->philosophers[i].meals_remaining != 0)
+		if (get_int(table, &table->philosophers[i].meals_remaining) != 0)
 			return (0);
 		i++;
 	}
-	table->dinning = false;
+	set_bool(table, &table->dinning, false);
 	return (1);
 }
 
@@ -34,19 +34,19 @@ static void	*check_all_philos_status(t_table *table)
 
 	i = 0;
 	elapsed_time = 0;
-	while (table->dinning)
+	while (get_bool(table, &table->dinning))
 	{
 		if (table->max_meals != -1 && check_meals_remaining(table) == 1)
 			return (NULL);
 		elapsed_time = get_elapsed_time(table);
 		if (elapsed_time == -1)
 			return (NULL);
-		if (table->philosophers[i].meals_remaining != 0
-			&& ((elapsed_time - table->philosophers[i].last_meal)
+		if (get_int(table, &table->philosophers[i].meals_remaining) != 0
+			&& ((elapsed_time - get_long(table, &table->philosophers[i].last_meal))
 				>= table->time_to_die))
 		{
 			print_message(&table->philosophers[i], DIE);
-			table->dinning = false;
+			set_bool(table, &table->dinning, false);
 			return (NULL);
 		}
 		i++;
@@ -57,16 +57,16 @@ static void	*check_all_philos_status(t_table *table)
 
 static int	wait_and_set_starting_time(t_table *table)
 {
-	while (table->nbr_of_philos_ready != table->nbr_of_philos)
+	while (get_int(table, &table->nbr_of_philos_ready) != table->nbr_of_philos)
 	{
 	}
 	if (gettimeofday(&table->started_time, NULL) != 0)
 	{
-		table->dinning = false;
+		set_bool(table, &table->dinning, false);
 		write (STDERR_FILENO, "Error while getting the time of the day\n", 41);
 		return (1);
 	}
-	table->monitor_ready = true;
+	set_bool(table, &table->monitor_ready, true);
 	return (0);
 }
 

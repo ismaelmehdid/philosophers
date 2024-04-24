@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 19:14:47 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/18 18:46:20 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/24 23:58:04 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,17 @@ void	eating(t_table *table, t_philo *philo)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		print_message(philo, FORK);
-		while (table->dinning)
+		while (get_bool(table, &table->dinning))
 		{
 		}
-		if (table->dinning == false)
+		pthread_mutex_unlock(philo->left_fork);
+		if (get_bool(table, &table->dinning) == false)
 			return ;
 	}
 	else
 		take_or_release_forks(philo, 0);
 	philo->eating = true;
-	philo->last_meal = get_elapsed_time(table);
+	set_long(table, &philo->last_meal, get_elapsed_time(table));
 	if (philo->last_meal == -1)
 		return ;
 	print_message(philo, EAT);
@@ -64,5 +65,5 @@ void	eating(t_table *table, t_philo *philo)
 		take_or_release_forks(philo, 1);
 	philo->eating = false;
 	if (table->max_meals != -1)
-		(philo->meals_remaining)--;
+		decrement_int(table, &philo->meals_remaining);
 }

@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 20:49:56 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/15 21:04:21 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/24 23:57:00 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,12 @@ void	increment_int(t_table *table, int *value)
 {
 	pthread_mutex_lock(&table->data_mutex);
 	(*value)++;
+	pthread_mutex_unlock(&table->data_mutex);
+}
+
+void	decrement_int(t_table *table, int *value)
+{
+	pthread_mutex_lock(&table->data_mutex);
+	(*value)--;
 	pthread_mutex_unlock(&table->data_mutex);
 }

@@ -6,7 +6,7 @@
 #    By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 15:07:05 by ismaelmehdi       #+#    #+#              #
-#    Updated: 2024/04/19 17:15:50 by imehdid          ###   ########.fr        #
+#    Updated: 2024/04/24 22:19:48 by imehdid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS = ${wildcard srcs/*.c srcs/errors_handling/*.c srcs/init_data/*.c srcs/util
 OBJDIR = ./objs
 OBJS = ${SRCS:%.c=$(OBJDIR)/%.o}
 
-CC = cc -g -pthread
+CC = cc -g -fsanitize=thread -pthread
 CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -rf
