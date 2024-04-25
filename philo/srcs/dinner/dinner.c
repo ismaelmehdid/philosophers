@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 00:35:04 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/24 23:42:30 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:39:44 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ void	*dinner(void *arg)
 	while (get_bool(table, &table->dinning))
 	{
 		eating(table, philosopher);
-		if (table->max_meals != -1 && get_int(table, &philosopher->meals_remaining) == 0)
+		if (table->max_meals != -1
+			&& get_int(table, &philosopher->meals_remaining) == 0)
+		{
 			return (NULL);
+		}
 		sleeping(table, philosopher);
 		thinking(table, philosopher);
 	}
@@ -34,8 +37,12 @@ void	*dinner(void *arg)
 int	start_dinner(t_table *table)
 {
 	if (philosophers_threads_init(table) != 0)
+	{
 		return (1);
+	}
 	if (philosophers_threads_joiner(table) != 0)
+	{
 		return (1);
+	}
 	return (0);
 }

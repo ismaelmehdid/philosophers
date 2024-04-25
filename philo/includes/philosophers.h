@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:07:32 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/04/24 23:57:41 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:52:05 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 
 //=== Data structures -----------------------------------------------------===//
 
-typedef enum s_types{
+typedef enum s_types
+{
 	EAT,
 	SLEEP,
 	THINK,
@@ -33,7 +34,8 @@ typedef enum s_types{
 	DIE,
 }	t_types;
 
-typedef struct s_table {
+typedef struct s_table
+{
 	int					nbr_of_philos;
 	long				time_to_die;
 	long				time_to_eat;
@@ -47,9 +49,10 @@ typedef struct s_table {
 	int					nbr_of_philos_ready;
 	pthread_mutex_t		data_mutex;
 	bool				dinning;
-}t_table;
+}	t_table;
 
-typedef struct s_philospher {
+typedef struct s_philospher
+{
 	int				id;
 	pthread_t		*thread_id;
 	long			last_meal;
@@ -57,8 +60,7 @@ typedef struct s_philospher {
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	t_table			*table;
-	bool			eating;
-}t_philo;
+}	t_philo;
 
 //=== Main functions ------------------------------------------------------===//
 

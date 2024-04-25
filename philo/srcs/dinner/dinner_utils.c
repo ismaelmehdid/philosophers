@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:40:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/24 23:47:08 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:54:08 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	synchronize_every_threads(t_table *table)
 	increment_int(table, &table->nbr_of_philos_ready);
 	while ((get_int(table, &table->nbr_of_philos_ready) != table->nbr_of_philos
 			|| get_bool(table, &table->monitor_ready) == false)
-			&& get_bool(table, &table->dinning) == true)
+		&& get_bool(table, &table->dinning) == true)
 	{
 	}
 }

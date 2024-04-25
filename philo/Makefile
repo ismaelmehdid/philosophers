@@ -6,13 +6,27 @@
 #    By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 15:07:05 by ismaelmehdi       #+#    #+#              #
-#    Updated: 2024/04/24 22:19:48 by imehdid          ###   ########.fr        #
+#    Updated: 2024/04/25 10:37:48 by imehdid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = ${wildcard srcs/*.c srcs/errors_handling/*.c srcs/init_data/*.c srcs/utils/*.c srcs/dinner/*.c srcs/utils/getters_and_setters/*.c}
+SRCS = srcs/dinner/dinner.c \
+		srcs/dinner/dinner_utils.c \
+		srcs/dinner/eat.c \
+		srcs/dinner/monitor.c \
+		srcs/dinner/sleep.c \
+		srcs/dinner/think.c \
+		srcs/dinner/threads_manager.c \
+		srcs/errors_handling/errors_handling.c \
+		srcs/init_data/init_data_utils.c \
+		srcs/init_data/init_data.c \
+		srcs/utils/getters_and_setters/getters.c \
+		srcs/utils/getters_and_setters/setters.c \
+		srcs/utils/free_and_destroy.c \
+		srcs/utils/philosophers_utils.c \
+		srcs/philosophers.c
 
 OBJDIR = ./objs
 OBJS = ${SRCS:%.c=$(OBJDIR)/%.o}

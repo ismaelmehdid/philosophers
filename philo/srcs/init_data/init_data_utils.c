@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:51:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/16 14:46:28 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/25 10:43:17 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	set_philosopher(t_table *table, int i)
 		table->philosophers[i].right_fork
 			= &table->forks[(i + 1) % table->nbr_of_philos];
 	table->philosophers[i].table = table;
-	table->philosophers[i].eating = false;
 	if (table->max_meals != -1)
 		table->philosophers[i].meals_remaining = table->max_meals;
 	else
