@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:19:15 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/20 17:51:16 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/26 19:09:36 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@ static void	*check_philo_status(t_philo *philo)
 	elapsed_time = 0;
 	while (1)
 	{
-		if (philo->meals_remaining != -1 && philo->meals_remaining == 0)
+		if (philo->table->max_meals != -1 && philo->meals_remaining == 0)
 			exit(0);
-		elapsed_time = get_elapsed_time(philo->table);
-		if (elapsed_time == -1)
-			exit (2);
-		if (((elapsed_time - philo->last_meal) >= philo->table->time_to_die))
+		elapsed_time = get_elapsed_time(philo->table, NONE);
+		if (((elapsed_time - get_long(philo->table, &philo->last_meal))
+				>= philo->table->time_to_die))
 		{
-			print_message(philo, DIE);
-			exit(EXIT_SUCCESS);
+			if (philo->table->nbr_of_philos == 1)
+				sem_post(philo->table->forks);
+			sem_wait(philo->table->data_semaphore);
+			printf("%ld %d \033[91mdied\033[0m\n",
+				get_elapsed_time(philo->table, NONE), philo->id);
+			exit(PHILO_DEATH);
 		}
 	}
 	return (NULL);
@@ -38,7 +41,6 @@ void	*monitor(void *arg)
 	t_philo	*philosopher;
 
 	philosopher = (t_philo *)arg;
-	printf("I am the monitor\n");
 	check_philo_status(philosopher);
 	return (NULL);
 }

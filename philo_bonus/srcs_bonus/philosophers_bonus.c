@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 15:07:22 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/04/20 16:24:57 by imehdid          ###   ########.fr       */
+/*   Created: 2024/04/26 17:08:19 by imehdid           #+#    #+#             */
+/*   Updated: 2024/04/26 18:27:35 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,5 @@ int	main(int argc, char **argv)
 	if (start_dinner(&table) != 0)
 		return (1);
 	destroy_and_free_everything(&table);
-	printf("end\n");
 	return (0);
 }

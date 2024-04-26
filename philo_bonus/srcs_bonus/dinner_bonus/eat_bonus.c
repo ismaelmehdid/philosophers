@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 19:14:47 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/22 14:40:03 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/26 18:00:16 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 void	eating(t_table *table, t_philo *philo)
 {
+	if (table->nbr_of_philos != 1)
+		sem_wait(table->forks_protection);
 	sem_wait(table->forks);
+	print_message(philo, FORK);
 	sem_wait(table->forks);
-	philo->eating = true;
-	philo->last_meal = get_elapsed_time(table);
-	if (philo->last_meal == -1)
-		return ;
+	print_message(philo, FORK);
+	sem_post(table->forks_protection);
+	set_long(table, &philo->last_meal, get_elapsed_time(table, EAT));
 	print_message(philo, EAT);
-	precise_usleep(table, table->time_to_eat * 1000);
+	precise_usleep(table->time_to_eat * 1000);
 	sem_post(table->forks);
 	sem_post(table->forks);
-	philo->eating = false;
 	if (table->max_meals != -1)
 		(philo->meals_remaining)--;
 }

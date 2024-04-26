@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:51:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/19 22:06:03 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/26 17:42:03 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	set_monitor(t_table *table)
 	if (!table->monitor)
 	{
 		write (STDERR_FILENO, "Memory allocation failure\n", 27);
-		destroy_and_free_everything(table);
+		destroy_all_semaphores(table);
 		return (1);
 	}
 	return (0);
@@ -29,7 +29,6 @@ static int	set_philosopher(t_table *table, int i)
 	table->philosophers[i].id = i;
 	table->philosophers[i].last_meal = -1;
 	table->philosophers[i].table = table;
-	table->philosophers[i].eating = false;
 	if (table->max_meals != -1)
 		table->philosophers[i].meals_remaining = table->max_meals;
 	else
@@ -46,6 +45,7 @@ int	set_philosophers(t_table *table)
 	if (!table->philosophers)
 	{
 		write (STDERR_FILENO, "Memory allocation failure\n", 27);
+		free(table->monitor);
 		destroy_all_semaphores(table);
 		return (1);
 	}
