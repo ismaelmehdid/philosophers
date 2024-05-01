@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 18:45:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/26 17:50:26 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/01 21:13:13 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,25 @@ static void	set_semaphores_util(t_table *table)
 		if (sem_close(table->forks) == -1)
 			write (STDERR_FILENO, "Error while closing a semaphore\n", 33);
 		if (sem_unlink("/forks"))
+			write (STDERR_FILENO, "Error while unlinking a semaphore\n", 35);
+		exit (EXIT_FAILURE);
+	}
+	sem_unlink("/end");
+	table->end = sem_open("/end", O_CREAT, 0644, 1);
+	if (table->end == SEM_FAILED)
+	{
+		write (STDERR_FILENO, "Semaphore opening error\n", 25);
+		if (sem_close(table->data_semaphore) == -1)
+			write (STDERR_FILENO, "Error while closing a semaphore\n", 33);
+		if (sem_unlink("/data_semaphore"))
+			write (STDERR_FILENO, "Error while unlinking a semaphore\n", 35);
+		if (sem_close(table->forks) == -1)
+			write (STDERR_FILENO, "Error while closing a semaphore\n", 33);
+		if (sem_unlink("/forks"))
+			write (STDERR_FILENO, "Error while unlinking a semaphore\n", 35);
+		if (sem_close(table->forks_protection) == -1)
+			write (STDERR_FILENO, "Error while closing a semaphore\n", 33);
+		if (sem_unlink("/forks_protection"))
 			write (STDERR_FILENO, "Error while unlinking a semaphore\n", 35);
 		exit (EXIT_FAILURE);
 	}
@@ -73,8 +92,6 @@ static void	set_table_data_utils(int argc, char **argv, t_table *table)
 static int	set_table_data(int argc, char **argv, t_table *table)
 {
 	set_table_data_utils(argc, argv, table);
-	if (set_monitor(table) != 0)
-		return (1);
 	if (set_philosophers(table) != 0)
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:19:15 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/25 10:55:38 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:32:54 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	wait_and_set_starting_time(t_table *table)
 {
 	while (get_int(table, &table->nbr_of_philos_ready) != table->nbr_of_philos)
 	{
+		usleep(1000);
 	}
 	if (gettimeofday(&table->started_time, NULL) != 0)
 	{
@@ -76,7 +77,6 @@ void	*monitor(void *arg)
 	t_table			*table;
 
 	table = (t_table *)arg;
-	printf("I am the monitor\n");
 	if (wait_and_set_starting_time(table) != 0)
 		return (NULL);
 	check_all_philos_status(table);

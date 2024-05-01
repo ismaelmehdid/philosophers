@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:19:15 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/26 19:09:36 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/01 22:42:17 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,20 @@ static void	*check_philo_status(t_philo *philo)
 	while (1)
 	{
 		if (philo->table->max_meals != -1 && philo->meals_remaining == 0)
-			exit(0);
+		{
+			sem_post(philo->table->end);
+			break ;
+		}
 		elapsed_time = get_elapsed_time(philo->table, NONE);
 		if (((elapsed_time - get_long(philo->table, &philo->last_meal))
 				>= philo->table->time_to_die))
 		{
 			if (philo->table->nbr_of_philos == 1)
 				sem_post(philo->table->forks);
-			sem_wait(philo->table->data_semaphore);
 			printf("%ld %d \033[91mdied\033[0m\n",
 				get_elapsed_time(philo->table, NONE), philo->id);
-			exit(PHILO_DEATH);
+			sem_post(philo->table->end);
+			break ;
 		}
 	}
 	return (NULL);

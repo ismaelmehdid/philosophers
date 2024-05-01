@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 19:14:47 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/26 18:00:16 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/01 21:35:12 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	eating(t_table *table, t_philo *philo)
 	sem_post(table->forks_protection);
 	set_long(table, &philo->last_meal, get_elapsed_time(table, EAT));
 	print_message(philo, EAT);
-	precise_usleep(table->time_to_eat * 1000);
+	precise_usleep(table, table->time_to_eat * 1000);
 	sem_post(table->forks);
 	sem_post(table->forks);
 	if (table->max_meals != -1)

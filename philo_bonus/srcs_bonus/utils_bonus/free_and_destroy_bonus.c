@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 00:29:59 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/26 17:51:11 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/01 21:38:11 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ static void	destroy_all_semaphores_util(t_table *table, int *errors)
 		(*errors)++;
 	}
 	if (sem_unlink("/forks_protection") == -1)
+	{
+		write (STDERR_FILENO, "Error while unlinking a semaphore\n", 35);
+		(*errors)++;
+	}
+	if (sem_close(table->end) == -1)
+	{
+		write (STDERR_FILENO, "Error while closing a semaphore\n", 33);
+		(*errors)++;
+	}
+	if (sem_unlink("/end") == -1)
 	{
 		write (STDERR_FILENO, "Error while unlinking a semaphore\n", 35);
 		(*errors)++;
@@ -58,8 +68,6 @@ void	destroy_all_semaphores(t_table *table)
 
 void	destroy_and_free_everything(t_table *table)
 {
-	if (table->monitor)
-		free(table->monitor);
 	if (table->philosophers)
 		free(table->philosophers);
 	destroy_all_semaphores(table);

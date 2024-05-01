@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 00:35:04 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/26 19:10:55 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/01 22:04:59 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,32 @@
 
 void	*dinner(void *arg)
 {
-	t_philo	*philosopher;
-	t_table	*table;
+	t_philo		*philosopher;
+	t_table		*table;
+	pthread_t	monitor_thread;
 
 	philosopher = (t_philo *)arg;
 	table = philosopher->table;
-	if (pthread_create(table->monitor, NULL, &monitor, philosopher) != 0)
+	if (pthread_create(&monitor_thread, NULL, &monitor, philosopher) != 0)
 	{
 		write (STDERR_FILENO, "Error while creating monitor's thread\n", 39);
-		exit (SYSTEM_ERROR);
+		sem_post(table->end);
+		usleep(1000);
 	}
-	if (pthread_detach(*table->monitor) != 0)
+	if (pthread_detach(monitor_thread) != 0)
 	{
 		write (STDERR_FILENO, "Error while creating monitor's thread\n", 39);
-		exit (SYSTEM_ERROR);
+		sem_post(table->end);
+		usleep(1000);
 	}
 	while (1)
 	{
 		eating(table, philosopher);
 		if (table->max_meals != -1 && philosopher->meals_remaining == 0)
-			exit (PHILO_FULL);
+		{
+			usleep(100);
+			break ;
+		}
 		sleeping(table, philosopher);
 		thinking(table, philosopher);
 	}
@@ -52,38 +58,12 @@ static void	terminate_all_processes(t_table *table)
 	}
 }
 
-static void	wait_all_processes(t_table *table, int status, int exit_status)
-{
-	pid_t	pid;
-
-	pid = 0;
-	while (1)
-	{
-		pid = waitpid(-1, &status, 0);
-		if (pid > 0)
-		{
-			if (WIFEXITED(status))
-			{
-				exit_status = WEXITSTATUS(status);
-				if (exit_status == PHILO_DEATH || exit_status == SYSTEM_ERROR)
-				{
-					terminate_all_processes(table);
-					break ;
-				}
-			}
-		}
-		else if (pid == -1)
-			break ;
-	}
-	if (exit_status == PHILO_DEATH)
-		sem_post(table->data_semaphore);
-}
-
 int	start_processes(t_table *table)
 {
 	int	i;
 
 	i = 0;
+	sem_wait(table->end);
 	while (i < table->nbr_of_philos)
 	{
 		table->philosophers[i].pid = fork();
@@ -93,12 +73,11 @@ int	start_processes(t_table *table)
 			return (1);
 		}
 		else if (table->philosophers[i].pid == 0)
-		{
 			dinner(&table->philosophers[i]);
-		}
 		i++;
 	}
-	wait_all_processes(table, 0, 0);
+	sem_wait(table->end);
+	terminate_all_processes(table);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 17:22:18 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/26 19:06:38 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/01 21:30:59 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@
 
 //=== Data structures -----------------------------------------------------===//
 
-typedef enum s_status
-{
-	PHILO_FULL,
-	PHILO_DEATH,
-	SYSTEM_ERROR,
-}	t_status;
-
 typedef enum s_types
 {
 	EAT,
@@ -57,6 +50,7 @@ typedef struct s_table
 	int					max_meals;
 	sem_t				*forks;
 	sem_t				*forks_protection;
+	sem_t				*end;
 	struct s_philospher	*philosophers;
 	pthread_t			*monitor;
 	struct timeval		started_time;
@@ -84,7 +78,7 @@ void	eating(t_table *table, t_philo *philo);
 void	sleeping(t_table *table, t_philo *philo);
 void	thinking(t_table *table, t_philo *philo);
 
-void	precise_usleep(long microsec);
+void	precise_usleep(t_table *table, long microsec);
 
 //=== Setters and getters -------------------------------------------------===//
 

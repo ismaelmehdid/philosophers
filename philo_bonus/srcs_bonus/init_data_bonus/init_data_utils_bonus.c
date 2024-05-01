@@ -6,23 +6,11 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:51:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/26 17:42:03 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/01 18:38:21 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes_bonus/philosophers_bonus.h"
-
-int	set_monitor(t_table *table)
-{
-	table->monitor = malloc(sizeof(pthread_t));
-	if (!table->monitor)
-	{
-		write (STDERR_FILENO, "Memory allocation failure\n", 27);
-		destroy_all_semaphores(table);
-		return (1);
-	}
-	return (0);
-}
 
 static int	set_philosopher(t_table *table, int i)
 {

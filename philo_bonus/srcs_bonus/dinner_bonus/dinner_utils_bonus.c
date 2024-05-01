@@ -6,13 +6,25 @@
 /*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:40:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/26 19:07:30 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/01 21:34:43 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes_bonus/philosophers_bonus.h"
 
-void	precise_usleep(long microsec)
+void	free_and_close_all(t_table *table)
+{
+	if (sem_close(table->data_semaphore) == -1)
+		write (STDERR_FILENO, "Error while closing a semaphore\n", 33);
+	if (sem_close(table->forks) == -1)
+		write (STDERR_FILENO, "Error while closing a semaphore\n", 33);
+	if (sem_close(table->forks_protection) == -1)
+		write (STDERR_FILENO, "Error while closing a semaphore\n", 33);
+	free(table->monitor);
+	free(table->philosophers);
+}
+
+void	precise_usleep(t_table *table, long microsec)
 {
 	struct timeval	start;
 	struct timeval	current;
@@ -22,7 +34,8 @@ void	precise_usleep(long microsec)
 	if (gettimeofday(&start, NULL) != 0)
 	{
 		write (STDERR_FILENO, "Error while getting the time of the day\n", 41);
-		exit (SYSTEM_ERROR);
+		sem_post(table->end);
+		return ;
 	}
 	while (1)
 	{
@@ -30,7 +43,8 @@ void	precise_usleep(long microsec)
 		{
 			write (STDERR_FILENO, "Error while getting the time of the day\n",
 				41);
-			exit (SYSTEM_ERROR);
+			sem_post(table->end);
+			return ;
 		}
 		elapsed = (current.tv_sec - start.tv_sec) * 1000000
 			+ (current.tv_usec - start.tv_usec);
@@ -51,7 +65,8 @@ long	get_elapsed_time(t_table *table, t_types type)
 			sem_post(table->forks);
 			sem_post(table->forks);
 		}
-		exit (SYSTEM_ERROR);
+		sem_post(table->end);
+		return (1);
 	}
 	return ((actual_time.tv_sec - table->started_time.tv_sec) * 1000
 		+ (actual_time.tv_usec - table->started_time.tv_usec) / 1000);

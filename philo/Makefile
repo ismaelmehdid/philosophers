@@ -6,7 +6,7 @@
 #    By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/06 15:07:05 by ismaelmehdi       #+#    #+#              #
-#    Updated: 2024/04/25 19:24:37 by imehdid          ###   ########.fr        #
+#    Updated: 2024/04/29 19:43:37 by imehdid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS = srcs/dinner/dinner.c \
 OBJDIR = ./objs
 OBJS = ${SRCS:%.c=$(OBJDIR)/%.o}
 
-CC = cc -g -fsanitize=thread -pthread
+CC = cc -pthread
 CFLAGS = -Wall -Wextra -Werror
 
 RM = rm -rf
