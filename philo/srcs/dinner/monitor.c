@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
+/*   By: imehdid <imehdid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 19:19:15 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/29 19:32:54 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/02 14:10:34 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,21 @@ static int	check_meals_remaining(t_table *table)
 	return (1);
 }
 
+static int	check_philo_death(t_table *table, int i, long elapsed_time)
+{
+	if (get_int(table, &table->philosophers[i].meals_remaining) != 0
+		&& ((elapsed_time
+				- get_long(table, &table->philosophers[i].last_meal))
+			>= table->time_to_die))
+	{
+		print_message(&table->philosophers[i], DIE);
+		set_bool(table, &table->dinning, false);
+		pthread_mutex_unlock(&table->message_mutex);
+		return (1);
+	}
+	return (0);
+}
+
 static void	*check_all_philos_status(t_table *table)
 {
 	int		i;
@@ -41,17 +56,12 @@ static void	*check_all_philos_status(t_table *table)
 		elapsed_time = get_elapsed_time(table);
 		if (elapsed_time == -1)
 			return (NULL);
-		if (get_int(table, &table->philosophers[i].meals_remaining) != 0
-			&& ((elapsed_time
-					- get_long(table, &table->philosophers[i].last_meal))
-				>= table->time_to_die))
-		{
-			print_message(&table->philosophers[i], DIE);
-			set_bool(table, &table->dinning, false);
+		if (check_philo_death(table, i, elapsed_time) != 0)
 			return (NULL);
-		}
 		i++;
 		i = i % table->nbr_of_philos;
+		if (DEBUG == 1)
+			usleep(1000);
 	}
 	return (NULL);
 }
@@ -60,7 +70,6 @@ static int	wait_and_set_starting_time(t_table *table)
 {
 	while (get_int(table, &table->nbr_of_philos_ready) != table->nbr_of_philos)
 	{
-		usleep(1000);
 	}
 	if (gettimeofday(&table->started_time, NULL) != 0)
 	{
@@ -77,7 +86,7 @@ void	*monitor(void *arg)
 	t_table			*table;
 
 	table = (t_table *)arg;
-	if (wait_and_set_starting_time(table) != 0)
+	if (DEBUG == 0 && wait_and_set_starting_time(table) != 0)
 		return (NULL);
 	check_all_philos_status(table);
 	return (NULL);

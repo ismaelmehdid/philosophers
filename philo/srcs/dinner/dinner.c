@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
+/*   By: imehdid <imehdid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 00:35:04 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/29 19:31:17 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/02 13:58:58 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	*dinner(void *arg)
 
 	philosopher = (t_philo *)arg;
 	table = philosopher->table;
-	synchronize_every_threads(table);
+	if (DEBUG == 0)
+		synchronize_every_threads(table);
 	while (get_bool(table, &table->dinning))
 	{
 		eating(table, philosopher);
@@ -36,6 +37,13 @@ void	*dinner(void *arg)
 
 int	start_dinner(t_table *table)
 {
+	if (DEBUG == 1 && gettimeofday(&table->started_time, NULL) != 0)
+	{
+		set_bool(table, &table->dinning, false);
+		destroy_and_free_everything(table);
+		write (STDERR_FILENO, "Error while getting the time of the day\n", 41);
+		return (1);
+	}
 	if (philosophers_threads_init(table) != 0)
 	{
 		return (1);

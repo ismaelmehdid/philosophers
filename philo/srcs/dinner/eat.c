@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   eat.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
+/*   By: imehdid <imehdid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 19:14:47 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/25 10:47:13 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/02 14:11:23 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	solo_philo(t_table *table, t_philo *philo)
 	print_message(philo, FORK);
 	while (get_bool(table, &table->dinning))
 	{
+		usleep(1000);
 	}
 	pthread_mutex_unlock(philo->left_fork);
 }
@@ -50,6 +51,8 @@ static void	take_or_release_forks(t_philo *philo, int code)
 
 void	eating(t_table *table, t_philo *philo)
 {
+	if (get_bool(table, &table->dinning) == false)
+		return ;
 	if (table->nbr_of_philos == 1)
 	{
 		solo_philo(table, philo);

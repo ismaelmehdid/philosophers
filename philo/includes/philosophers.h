@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
+/*   By: imehdid <imehdid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 15:07:32 by ismaelmehdi       #+#    #+#             */
-/*   Updated: 2024/04/29 19:23:35 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/02 14:26:15 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
+# define DEBUG 0
 
 //=== Includes ------------------------------------------------------------===//
 
@@ -48,6 +49,7 @@ typedef struct s_table
 	struct timeval		started_time;
 	int					nbr_of_philos_ready;
 	pthread_mutex_t		data_mutex;
+	pthread_mutex_t		message_mutex;
 	bool				dinning;
 }	t_table;
 

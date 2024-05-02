@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_destroy.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
+/*   By: imehdid <imehdid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 00:29:59 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/15 20:54:38 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/02 13:12:39 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ void	destroy_all_mutexes(t_table *table)
 		pthread_mutex_destroy(&table->forks[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&table->message_mutex);
+	pthread_mutex_destroy(&table->data_mutex);
 	free (table->forks);
 }

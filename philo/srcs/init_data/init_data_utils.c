@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imehdid <ismaelmehdid@student.42.fr>       +#+  +:+       +#+        */
+/*   By: imehdid <imehdid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 18:51:36 by imehdid           #+#    #+#             */
-/*   Updated: 2024/04/25 10:43:17 by imehdid          ###   ########.fr       */
+/*   Updated: 2024/05/02 13:58:27 by imehdid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	set_philosopher(t_table *table, int i)
 			free(table->philosophers[j++].thread_id);
 		destroy_all_mutexes(table);
 		free(table->philosophers);
+		free(table->forks);
 		return (1);
 	}
 	return (0);
@@ -62,6 +63,7 @@ int	set_philosophers(t_table *table)
 	{
 		write (STDERR_FILENO, "Memory allocation failure\n", 27);
 		destroy_all_mutexes(table);
+		free(table->forks);
 		return (1);
 	}
 	while (i < table->nbr_of_philos)
@@ -83,6 +85,8 @@ static int	set_fork(t_table *table, int i)
 		while (j < i)
 			pthread_mutex_destroy(&table->forks[j++]);
 		free (table->forks);
+		pthread_mutex_destroy(&table->message_mutex);
+		pthread_mutex_destroy(&table->data_mutex);
 		write (STDERR_FILENO, "Mutex initialisation error\n", 28);
 		return (1);
 	}
@@ -98,6 +102,8 @@ int	set_forks(t_table *table)
 	if (!table->forks)
 	{
 		write (STDERR_FILENO, "Memory allocation failure\n", 27);
+		pthread_mutex_destroy(&table->message_mutex);
+		pthread_mutex_destroy(&table->data_mutex);
 		return (1);
 	}
 	while (i < table->nbr_of_philos)
